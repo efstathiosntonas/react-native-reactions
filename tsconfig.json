@@ -26,6 +26,6 @@
     "strict": true,
     "target": "esnext"
   },
-  "exclude": ["example"],
+  "exclude": ["example", "**/__tests__/*"],
   "include": ["src"]
 }
