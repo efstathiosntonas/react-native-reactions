@@ -1,4 +1,5 @@
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import React, { memo, useState } from 'react';
 import { styles } from './styles';
 import { Reaction } from 'react-native-reactions';
@@ -14,7 +15,7 @@ const Footer = ({
 }: CardProps) => (
   <View style={styles.bottomContainer}>
     <Reaction
-      type="modal"
+      type="default"
       items={CardEmojiUrlList}
       itemIndex={index}
       onTap={setSelectedEmoji}
@@ -26,12 +27,12 @@ const Footer = ({
         />
       ) : (
         <TouchableOpacity activeOpacity={1}>
-          <Text>{Strings?.like}</Text>
+          <Text style={styles.title}>{Strings?.like}</Text>
         </TouchableOpacity>
       )}
     </Reaction>
-    <Text>{Strings?.comment}</Text>
-    <Text>{Strings?.share}</Text>
+    <Text style={styles.title}>{Strings?.comment}</Text>
+    <Text style={styles.title}>{Strings?.share}</Text>
   </View>
 );
 

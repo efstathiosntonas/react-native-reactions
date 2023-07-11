@@ -1,39 +1,37 @@
-/**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
- *
- * @format
- */
 const path = require('path');
-const rootPackage = require('../package.json');
+const fs = require('fs');
 const blacklist = require('metro-config/src/defaults/exclusionList');
-const rootModules = Object.keys({
-  ...rootPackage.peerDependencies,
-});
-const moduleRoot = path.resolve(__dirname, '..');
-/**
- * Only load one version for peerDependencies and alias them to the versions in example's node_modules"
- */
+
+const escape = require('escape-string-regexp');
+
+const root = path.resolve(__dirname, '..');
+const pak = JSON.parse(
+    fs.readFileSync(path.join(root, 'package.json'), 'utf8'),
+);
+
+const modules = [
+  '@babel/runtime',
+  ...Object.keys({
+    ...pak.dependencies,
+    ...pak.peerDependencies,
+  }),
+];
+
 module.exports = {
-  watchFolders: [moduleRoot],
+  projectRoot: __dirname,
+  watchFolders: [root],
+
   resolver: {
     blacklistRE: blacklist([
-      ...rootModules.map(
-        m =>
-          new RegExp(
-            `^${escape(path.join(moduleRoot, 'node_modules', m))}\\/.*$`
-          )
-      ),
-      /^((?!example).)+[\/\\]node_modules[/\\]react[/\\].*/,
-      /^((?!example).)+[\/\\]node_modules[/\\]react-native[/\\].*/,
+      new RegExp(`^${escape(path.join(root, 'node_modules'))}\\/.*$`),
     ]),
-    extraNodeModules: {
-      ...rootModules.reduce((acc, name) => {
-        acc[name] = path.join(__dirname, 'node_modules', name);
-        return acc;
-      }, {}),
-    },
+
+    extraNodeModules: modules.reduce((acc, name) => {
+      acc[name] = path.join(__dirname, 'node_modules', name);
+      return acc;
+    }, {}),
   },
+
   transformer: {
     getTransformOptions: async () => ({
       transform: {
