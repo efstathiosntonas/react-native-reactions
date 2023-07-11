@@ -1,16 +1,20 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "declaration": true,
-    "esModuleInterop": true,
+    "paths": {
+      "react-native-reactions": ["./src/index"]
+    },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "jsx": "react",
-    "lib": ["ESNext"],
-    "module": "ESNext",
-    "importsNotUsedAsValues": "error",
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "Node",
+    "jsx": "react",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "module": "esnext",
+    "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
@@ -18,13 +22,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "resolveJsonModule": true,
-    "noEmitOnError": true,
-    "outDir": "./lib",
     "skipLibCheck": true,
-    "sourceMap": true,
     "strict": true,
-    "target": "ES2018"
+    "target": "esnext"
   },
-  "exclude": ["example/node_modules/**", "node_modules/**", "**/__tests__/*"],
+  "exclude": ["example"],
   "include": ["src"]
 }
